@@ -8,7 +8,7 @@ import VtdFuncCompObj from "./components/VtdFuncCompObj";
 function VtdApp() {
   // Object
   const users = {
-    fullName: "Vũ Tiến Đức",
+    fullName: "Trần Văn A",
     age:20,
     phone: "024241841"
   }

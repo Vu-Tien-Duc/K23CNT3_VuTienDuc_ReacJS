@@ -14,7 +14,7 @@ import React, { Component } from 'react'
   ChangeInfo = (ev)=>{
     // cập nhập state
     this.setState({
-      fullName:"Vũ Tiến Đức",
+      fullName:"Vũ Tiến Đ",
       Phone:"0396705599",
       age:24
     })

@@ -3,7 +3,7 @@ import React from 'react'
  function VtdFuncComp(props) {
   return (
     <div>
-        <h1>Demo: function components props</h1>
+        <h1>Demo: Function components props</h1>
         <p>Lấy Dữ liệu từ props để hiển thị</p>
         <p>Name: {props.name}</p>
         <p>Age: {props.age}</p>
