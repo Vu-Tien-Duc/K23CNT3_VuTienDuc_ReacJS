@@ -1,51 +1,22 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 export default class VtdStudent extends Component {
-    constructor(props){
-        super(props);
-    }
-    vtdHandleView = (vtdStudent) =>{
-        // chuyển liên VtdStudentList
-        this.props.onVtdHandleView(vtdStudent);
-    }
-    render() {
-        // lấy đối tượng dữ liệu chuyển thì VtdStudentList
-        let {renderVtdStudent,key} = this.props;
-        console.log("Student:" , renderVtdStudent);
-        
-        return (
-            <>
-                <tr>
-                    <td>{key}</td>
-                    <td>{renderVtdStudent.vtdId}</td>
-                    <td>{renderVtdStudent.vtdStudentName}</td>
-                    <td>{renderVtdStudent.vtdAge}</td>
-                    <td>{renderVtdStudent.vtdGender}</td>
-                   
-                    <td>
-                        <div className="template-demo">
-                            <button
-                                type="button"
-                                className="btn btn-danger btn-icon-text"
-                            onClick={()=>this.vtdHandleView(renderVtdStudent)}>
-                                Xem
-                            </button>
-                            <button
-                                type="button"
-                                className="btn btn-warning btn-icon-text"
-                            >
-                                Sửa
-                            </button>
-                            <button
-                                type="button"
-                                className="btn btn-success btn-icon-text"
-                            >
-                                Xóa
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            </>
-        )
-    }
+  render() {
+    let { renderVtdStudent, VtdIndex, onVtdHandleView, onVtdHandleEdit, onVtdHandleDelete } = this.props;
+
+    return (
+      <tr>
+        <td>{VtdIndex}</td>
+        <td>{renderVtdStudent.VtdID}</td>
+        <td>{renderVtdStudent.VtdStudentName}</td>
+        <td>{renderVtdStudent.VtdAge}</td>
+        <td>{renderVtdStudent.VtdGender}</td>
+        <td>
+          <button className="btn btn-info btn-sm me-2" onClick={() => onVtdHandleView(renderVtdStudent)}>Xem</button>
+          <button className="btn btn-warning btn-sm me-2" onClick={() => onVtdHandleEdit(renderVtdStudent)}>Sửa</button>
+          <button className="btn btn-danger btn-sm" onClick={() => onVtdHandleDelete(renderVtdStudent.VtdID)}>Xóa</button>
+        </td>
+      </tr>
+    );
+  }
 }

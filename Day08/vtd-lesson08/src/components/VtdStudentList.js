@@ -1,43 +1,35 @@
-import React, { Component } from 'react'
-import VtdStudent from './VtdStudent'
+import React, { Component } from 'react';
+import VtdStudent from './VtdStudent';
 
 export default class VtdStudentList extends Component {
-    constructor(props){
-        super(props);
-    }
-   vtdHandleView = (vtdStudent)=>{
-    this.props.onVtdHandleView(vtdStudent)
-   }
-    render() {
-        // Lấy dữ liệu từ props VtdApp.js chuyển xuống
-        let {renderVtdStudents} = this.props;
-        console.log("List:" , renderVtdStudents);
-        // chuyển dữ liệu vào VtdStudent đển hiển thị
-        let vtdElementStudent = renderVtdStudents.map((vtdItem,index)=>{
-            return <VtdStudent key={index} renderVtdStudent={vtdItem} onVtdHandleView={this.vtdHandleView} />
-        })
-        return (
-            <div className="card-body">
-                <h3 className="card-title">Danh sách sinh viên</h3>
-                <div className="table-responsive pt-3">
-                    <table className="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Mã sinh viên</th>
-                                <th>Tên sinh viên</th>
-                                <th>Tuổi</th>
-                                <th>Giới tính</th>
-                                <th>Hành động</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                          
-                           {vtdElementStudent}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        )
-    }
+  render() {
+    let { renderVtdStudents, onVtdHandleView, onVtdHandleEdit, onVtdHandleDelete } = this.props;
+
+    return (
+      <table className="table table-bordered">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Mã SV</th>
+            <th>Họ tên</th>
+            <th>Tuổi</th>
+            <th>Giới tính</th>
+            <th>Hành động</th>
+          </tr>
+        </thead>
+        <tbody>
+          {renderVtdStudents.map((student, index) => (
+            <VtdStudent 
+              key={student.VtdID} 
+              VtdIndex={index + 1} 
+              renderVtdStudent={student} 
+              onVtdHandleView={onVtdHandleView} 
+              onVtdHandleEdit={onVtdHandleEdit}
+              onVtdHandleDelete={onVtdHandleDelete}
+            />
+          ))}
+        </tbody>
+      </table>
+    );
+  }
 }

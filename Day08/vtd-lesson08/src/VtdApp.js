@@ -1,58 +1,141 @@
-import React, { Component } from 'react'
-import VtdControl from './components/VtdControl'
-import VtdStudentList from './components/VtdStudentList'
-import VtdForm from './components/VtdForm'
+import React, { Component } from 'react';
+import VtdControl from './components/VtdControl';
+import VtdStudentList from './components/VtdStudentList';
+import VtdForm from './components/VtdForm';
+import VtdStudentDetail from './components/VtdStudentDetail'; 
 
-export default class VtdApp extends Component {
-  constructor(props){
+class VtdApp extends Component {
+  constructor(props) {
     super(props);
-    this.state={
-      vtdStudents:[
-        {vtdId:"SV001",vtdStudentName:"Vũ Tiến Đức",vtdAge:20,vtdGender:"Nam",vtdBirthday:"10/11/2005",vtdBirthplace:"YB",vtdAddress:"Thôn 7,Thịnh Hưng"},
-        {vtdId:"SV002",vtdStudentName:"Vũ Tiến Nam",vtdAge:22,vtdGender:"Nữ",vtdBirthday:"20/05/2003",vtdBirthplace:"HN",vtdAddress:"25 Vũ Ngọc Phan"},
-        {vtdId:"SV003",vtdStudentName:"Vũ Tiến Bắc",vtdAge:33,vtdGender:"Nam",vtdBirthday:"14/07/1996",vtdBirthplace:"HCM",vtdAddress:"Thành Phố Hồ Chí Minh"},
-        {vtdId:"SV004",vtdStudentName:"Vũ Tiến Tây",vtdAge:78,vtdGender:"Nữ",vtdBirthday:"09/09/1955",vtdBirthplace:"HD",vtdAddress:"Hải Dương"},
-        {vtdId:"SV005",vtdStudentName:"Vũ Tiến Tây",vtdAge:78,vtdGender:"Nữ",vtdBirthday:"09/09/1955",vtdBirthplace:"HD",vtdAddress:"Hải Dương"},
+    this.state = {
+      VtdStudents: [ 
+        { VtdID: "SV001", VtdStudentName: "Vũ Tiến Đức", VtdAge: 19, VtdGender: "Nam", VtdBirthday: "05/11/2005", VtdBirthPlace: "QN", VtdAddress: "Yên Xá" },
+        { VtdID: "SV002", VtdStudentName: "Vũ Tiến Nam", VtdAge: 19, VtdGender: "Nam", VtdBirthday: "04/09/2005", VtdBirthPlace: "HN", VtdAddress: "Hai Bà Trưng" },
+        { VtdID: "SV003", VtdStudentName: "Vũ Tiến Bắc", VtdAge: 19, VtdGender: "Nam", VtdBirthday: "04/09/2005", VtdBirthPlace: "HD", VtdAddress: "Hải Dương" },
+        { VtdID: "SV004", VtdStudentName: "Vũ Tiến Tây", VtdAge: 20, VtdGender: "Nam", VtdBirthday: "13/01/2005", VtdBirthPlace: "HD", VtdAddress: "Yên Xá" }
       ],
-      vtdStudent:"",
-    }
+      filteredStudents: [],
+      selectedStudent: null,
+      showDetail: false, 
+      isAddingNew: false,
+      searchKeyword: ''
+    };
   }
 
-  // hàm sử lý sự kiện view student
-   vtdHandleView = (vtdStudent)=>
-    {
-        this.setState({
-          vtdStudent:vtdStudent,
-        })
-    }
+  componentDidMount() {
+    this.setState({ filteredStudents: this.state.VtdStudents });
+  }
+
+  // 🔎 Xử lý tìm kiếm sinh viên theo tên
+  onVtdHandleSearch = (keyword) => {
+    this.setState({ searchKeyword: keyword }, this.filterStudents);
+  };
+
+  // Hàm lọc danh sách sinh viên dựa vào từ khóa tìm kiếm
+  filterStudents = () => {
+    const { VtdStudents, searchKeyword } = this.state;
+    const filtered = VtdStudents.filter(student =>
+      student.VtdStudentName.toLowerCase().includes(searchKeyword.toLowerCase())
+    );
+    this.setState({ filteredStudents: filtered });
+  };
+
+  // 🔎 Xử lý khi bấm "Xem"
+  onVtdHandleView = (VtdStudent) => {
+    this.setState({
+      selectedStudent: VtdStudent,
+      showDetail: true,
+      isAddingNew: false
+    });
+  };
+
+  // ❌ Xử lý khi bấm "Đóng"
+  onVtdHandleCloseDetail = () => {
+    this.setState({ showDetail: false });
+  };
+
+  // ✏️ Xử lý khi bấm "Sửa"
+  onVtdHandleEdit = (VtdStudent) => {
+    this.setState({ selectedStudent: VtdStudent, showDetail: false, isAddingNew: false });
+  };
+
+  // 🗑 Xử lý khi bấm "Xóa"
+  onVtdHandleDelete = (studentID) => {
+    this.setState(prevState => {
+      const updatedStudents = prevState.VtdStudents.filter(student => student.VtdID !== studentID);
+      return { VtdStudents: updatedStudents, showDetail: false };
+    }, this.filterStudents);
+  };
+
+  // ✅ Cập nhật sinh viên sau khi chỉnh sửa
+  onVtdHandleUpdate = (updatedStudent) => {
+    this.setState(prevState => {
+      const updatedStudents = prevState.VtdStudents.map(student => 
+        student.VtdID === updatedStudent.VtdID ? updatedStudent : student
+      );
+      return { VtdStudents: updatedStudents, selectedStudent: null, isAddingNew: false };
+    }, this.filterStudents);
+  };
+
+  // 🆕 Xử lý khi bấm "Thêm mới"
+  onVtdHandleAddNew = () => {
+    this.setState({
+      selectedStudent: null,
+      showDetail: false,
+      isAddingNew: true
+    });
+  };
+
+  // 🆕 Xử lý khi lưu sinh viên mới
+  onVtdHandleSaveNew = (newStudent) => {
+    this.setState(prevState => ({
+      VtdStudents: [...prevState.VtdStudents, newStudent],
+      selectedStudent: null,
+      isAddingNew: false
+    }), this.filterStudents);
+  };
+
   render() {
-    // log
-    console.log("View Student",this.state.vtdStudent);
-    
     return (
       <div>
-        <h1 style={{ textAlign: "center" }}  >
-          Vũ Tiến Đức - K23CNT3 - Mini Project1
-          </h1>
-        <section className="container-fluid mt-3">
+        <h1 className='text-center'>Vũ Tiến Đức - K23CNT3 - Mini Project</h1>
+        <section className='container-fluid mt-3'>
           <div className="row">
             <div className="col-lg-7 grid-margin stretch-card">
               <div className="card">
-               {/* Header */}
-               <VtdControl />
-               {/* Danh sách Sinh Viên  */}
-               <VtdStudentList renderVtdStudents={this.state.vtdStudents} onVtdHandleView={this.vtdHandleView}/>
+                <VtdControl 
+                  onVtdHandleAddNew={this.onVtdHandleAddNew} 
+                  onVtdHandleSearch={this.onVtdHandleSearch} 
+                />
+                <VtdStudentList
+                  renderVtdStudents={this.state.filteredStudents} 
+                  onVtdHandleView={this.onVtdHandleView} 
+                  onVtdHandleEdit={this.onVtdHandleEdit}
+                  onVtdHandleDelete={this.onVtdHandleDelete}
+                />
               </div>
             </div>
 
             <div className="col-5 grid-margin">
-            {/* form */}
-            <VtdForm renderVtdStudent = {this.state.vtdStudent} />
+              {this.state.showDetail ? (
+                <VtdStudentDetail 
+                  student={this.state.selectedStudent} 
+                  onClose={this.onVtdHandleCloseDetail} 
+                />
+              ) : (
+                <VtdForm 
+                  renderVtdStudent={this.state.selectedStudent} 
+                  onVtdHandleUpdate={this.onVtdHandleUpdate} 
+                  onVtdHandleSaveNew={this.onVtdHandleSaveNew} 
+                  isAddingNew={this.state.isAddingNew} 
+                />
+              )}
             </div>
           </div>
         </section>
-
       </div>
-    )
+    );
   }
 }
+
+export default VtdApp;
