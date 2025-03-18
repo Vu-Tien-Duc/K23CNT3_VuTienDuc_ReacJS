@@ -7,7 +7,7 @@ export default function VtdUseState() {
     // Khởi tạo state là 1 mảng
     const vtdArr = [1, 2, 3, 4, 5, 6];
     const [vtdArray, setVtdArray] = useState(vtdArr);
-
+    
     // Khởi Tạo state với mảng object
     const vtdStudents = [
         { vtdId: "SV001", vtdName: "Vũ Đức", vtdAge: 20 },

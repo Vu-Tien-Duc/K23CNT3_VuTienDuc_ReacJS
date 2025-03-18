@@ -91,7 +91,7 @@ class VtdApp extends Component {
     this.setState(prevState => ({
       VtdStudents: [...prevState.VtdStudents, newStudent],
       selectedStudent: null,
-      isAddingNew: false
+      isAddingNew: true
     }), this.filterStudents);
   };
 
