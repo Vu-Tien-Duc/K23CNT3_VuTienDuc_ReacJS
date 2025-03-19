@@ -25,6 +25,7 @@ export default function VtdReadApiLocal() {
                     <tr>
                         <th>FullName</th>
                         <th>Age</th>
+                        <th>Class</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,6 +34,8 @@ export default function VtdReadApiLocal() {
                             <tr>
                                 <td>{vtdItem.fullName}</td>
                                 <td>{vtdItem.age}</td>
+                                <td>{vtdItem.class}</td>
+                                
                             </tr>
                         )
                     })}

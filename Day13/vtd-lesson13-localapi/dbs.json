@@ -1,26 +1,25 @@
 {
-    "users":[
+    "users": [
         {
-            "fullName":"Vũ Tiến Đức",
-            "age":22,
-            "class":"K23CNT3"
+            "fullName": "Vũ Tiến Đức",
+            "age": 22,
+            "class": "K23CNT3"
         },
         {
-           "fullName":"Vũ Tiến Đông",
-            "age":33,
-            "class":"K23CNT2" ,
-            
+            "fullName": "Vũ Tiến Đông",
+            "age": 33,
+            "class": "K23CNT2"
         },
         {
-           "fullName":"Vũ Tiến Nam",
-            "age":66,
-            "class":"K23CNT1" 
+            "fullName": "Vũ Tiến Nam",
+            "age": 66,
+            "class": "K23CNT1"
         }
     ],
-    "Student":[
+    "Student": [
         {
-            "name":"Vũ Đưc"
+            "name": "Vũ Đưc",
+            "age": 242
         }
     ]
-    
 }
